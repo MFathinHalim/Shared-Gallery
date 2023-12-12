@@ -8,7 +8,7 @@ const ImageKit = require("imagekit");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const { mainModel } = require("./models/post");
-
+const axios = require("axios");
 dotenv.config();
 
 var imagekit = new ImageKit({
@@ -50,6 +50,11 @@ app.use(
 );
 
 app.post("/", upload.single("image"), async (req: Request, res: Response) => {
+  const token = req.body["g-recaptcha-response"];
+  const response = await axios.post(
+    `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.GOOGLE_RECAPTCHA_SECRET_KEY}&response=${token}`
+  );
+  if (!response.data.success) return res.json({ msg: "reCAPTCHA tidak valid" });
   //TODO first things, we will make the const variable from the req data
   const desc = req.body.desc;
   const nama = req.body.nama;

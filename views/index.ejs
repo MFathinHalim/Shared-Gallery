@@ -92,11 +92,14 @@
     <div class="container mt-3">
       <div class="card-columns">
         <!-- Sample image cards -->
-        <% data.sort(() => Math.random() - 0.5).slice(0,12).forEach((entry) => {
-        %>
+        <% data.sort(() => Math.random() - 0.5).forEach((entry) => { %>
 
         <div class="card">
-          <img src="<%= entry.imgLink %>" class="card-img-top" alt="Image 1" />
+          <img
+            src="<%= entry.imgLink %>"
+            class="card-img-top"
+            alt="Image 1"
+            onerror="this.remove()" />
           <div class="card-body">
             <h4 class="card-title"><%= entry.nama %></h4>
             <p class="card-text"><%= entry.desc %></p>
