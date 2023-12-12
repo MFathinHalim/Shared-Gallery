@@ -1,6 +1,8 @@
 <link
   rel="stylesheet"
   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+<script src="https://www.google.com/recaptcha/api.js"></script>
+
 <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
   <a class="navbar-brand" href="/">Shared Gallery</a>
 
@@ -104,7 +106,16 @@
               accept="image/*"
               required />
           </div>
-          <button type="submit" class="btn btn-primary">Upload</button>
+          <button
+            data-sitekey="6LfslRQoAAAAAHVBGwEVitjEQSjCD6F8unKDUdct"
+            data-callback="onSubmit"
+            name="g-recaptcha-response"
+            id="postButton"
+            data-action="submit"
+            type="submit"
+            class="btn g-recaptcha btn-primary">
+            Upload
+          </button>
         </form>
       </div>
     </div>

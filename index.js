@@ -45,6 +45,7 @@ var ImageKit = require("imagekit");
 var mongoose = require("mongoose");
 var bodyParser = require("body-parser");
 var mainModel = require("./models/post").mainModel;
+var axios = require("axios");
 dotenv.config();
 var imagekit = new ImageKit({
     publicKey: process.env.publicImg,
@@ -72,10 +73,16 @@ app.use(bodyParser.urlencoded({
     extended: true,
 }));
 app.post("/", upload.single("image"), function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var desc, nama, id, imgLink;
+    var token, response, desc, nama, id, imgLink;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
+                token = req.body["g-recaptcha-response"];
+                return [4 /*yield*/, axios.post("https://www.google.com/recaptcha/api/siteverify?secret=".concat(process.env.GOOGLE_RECAPTCHA_SECRET_KEY, "&response=").concat(token))];
+            case 1:
+                response = _a.sent();
+                if (!response.data.success)
+                    return [2 /*return*/, res.json({ msg: "reCAPTCHA tidak valid" })];
                 desc = req.body.desc;
                 nama = req.body.nama;
                 id = data.length + 1;
@@ -109,7 +116,7 @@ app.post("/", upload.single("image"), function (req, res) { return __awaiter(voi
                         desc: desc,
                         imgLink: imgLink,
                     })];
-            case 1:
+            case 2:
                 _a.sent();
                 data.unshift({ id: id, nama: nama, desc: desc, imgLink: imgLink });
                 res.redirect("/" + id);
