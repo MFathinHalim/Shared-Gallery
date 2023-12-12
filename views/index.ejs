@@ -92,7 +92,8 @@
     <div class="container mt-3">
       <div class="card-columns">
         <!-- Sample image cards -->
-        <% data.sort(() => Math.random() - 0.5).forEach((entry) => { %>
+        <% data.sort(() => Math.random() - 0.5).slice(0,20).forEach((entry) => {
+        %>
 
         <div class="card">
           <img
