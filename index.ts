@@ -104,7 +104,9 @@ mongoose
       app.get("/search", function (req: Request, res: Response) {
         const searchTerm: any = req.query.term; // Dapatkan input pengguna
         const searchResults = data.filter(
-          (item) => item.nama && item.nama.includes(searchTerm || "") // Cek keberadaan item.nama sebelum menggunakan includes
+          (item) =>
+            item.nama &&
+            item.nama.toLowerCase().includes(searchTerm.toLowerCase() || "") // Cek keberadaan item.nama sebelum menggunakan includes
         );
         res.render("index", {
           data: searchResults,
