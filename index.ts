@@ -71,20 +71,20 @@ app.post("/", upload.single("image"), async (req: Request, res: Response) => {
           useUniqueFileName: false,
           folder: "SG",
         },
-        function (error: any, result: any) {
+        async function (error: any, result: any) {
           if (error) console.log(error);
+          await mainModel.create({
+            id,
+            nama,
+            desc,
+            imgLink,
+          });
+          data.unshift({ id, nama, desc, imgLink });
+          res.redirect("/" + id);
         }
       );
     }
   );
-  await mainModel.create({
-    id,
-    nama,
-    desc,
-    imgLink,
-  });
-  data.unshift({ id, nama, desc, imgLink });
-  res.redirect("/" + id);
 });
 
 mongoose
@@ -117,6 +117,7 @@ mongoose
 
         res.render("img", {
           entry: searchResult,
+          data: data
         });
       });
 

@@ -100,8 +100,26 @@ app.post("/", upload.single("image"), function (req, res) { return __awaiter(voi
                                             useUniqueFileName: false,
                                             folder: "SG",
                                         }, function (error, result) {
-                                            if (error)
-                                                console.log(error);
+                                            return __awaiter(this, void 0, void 0, function () {
+                                                return __generator(this, function (_a) {
+                                                    switch (_a.label) {
+                                                        case 0:
+                                                            if (error)
+                                                                console.log(error);
+                                                            return [4 /*yield*/, mainModel.create({
+                                                                    id: id,
+                                                                    nama: nama,
+                                                                    desc: desc,
+                                                                    imgLink: imgLink,
+                                                                })];
+                                                        case 1:
+                                                            _a.sent();
+                                                            data.unshift({ id: id, nama: nama, desc: desc, imgLink: imgLink });
+                                                            res.redirect("/" + id);
+                                                            return [2 /*return*/];
+                                                    }
+                                                });
+                                            });
                                         })];
                                 case 1:
                                     _a.sent();
@@ -110,16 +128,6 @@ app.post("/", upload.single("image"), function (req, res) { return __awaiter(voi
                         });
                     });
                 });
-                return [4 /*yield*/, mainModel.create({
-                        id: id,
-                        nama: nama,
-                        desc: desc,
-                        imgLink: imgLink,
-                    })];
-            case 2:
-                _a.sent();
-                data.unshift({ id: id, nama: nama, desc: desc, imgLink: imgLink });
-                res.redirect("/" + id);
                 return [2 /*return*/];
         }
     });
@@ -152,6 +160,7 @@ mongoose
             var searchResult = data.find(function (entry) { return entry.id == searchTerm; });
             res.render("img", {
                 entry: searchResult,
+                data: data
             });
         });
         app.listen(port, function () {

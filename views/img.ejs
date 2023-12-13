@@ -42,12 +42,10 @@
         border: none;
         background-color: var(--primary);
       }
-      .card {
+      .card, .card-img {
         border-radius: 12px;
       }
-      .card-img-top {
-        border-radius: 12px 12px 0 0;
-      }
+
       ::placeholder {
         color: var(--text) !important;
       }
@@ -92,29 +90,48 @@
   <body>
     <%- include("navbar") %>
     <div class="container mt-3">
-      <!-- Sample image cards -->
-
-      <div class="card mb-3">
-        <div class="row no-gutters">
-          <div class="col-md-4">
-            <img src="<%= entry.imgLink %>" class="card-img" alt="<%= entry.name %>" />
-          </div>
-          <div class="col-md-8">
+      <!-- Featured Image Card -->
+      <div class="row">
+        <div class="col-md-4 mb-3">
+          <img src="<%= entry.imgLink %>" class="card-img" alt="<%= entry.name %>" />
+        </div>
+        <div class="col-md-8">
+          <div class="card mb-3">
             <div class="card-body">
               <h5 class="card-title"><%= entry.nama %></h5>
               <p class="card-text"><%= entry.desc %></p>
             </div>
             <div class="card-footer">
-              <a href="<%= entry.imgLink %>" download="<%= entry.name %>.jpg">
-                <button class="btn btn-primary btn-sm">Download</button>
-              </a>
+              <a href="<%= entry.imgLink %>" download="<%= entry.name %>.jpg" class="btn btn-primary btn-sm">Download</a>
+            </div>
+          </div>
+          <div class="card mb-3" style="background-color: var(--secondary) !important; color:var(--text) !important;">
+            <div class="card-body" >
+              <a class="card-title h5" href="https://portofolio.mfathinhalim.repl.co">*Ads : Ingin Punya Website Keren? Diskusikan Dengan M.Fathin Halim !</a>
             </div>
           </div>
         </div>
       </div>
-      
+    
+      <!-- Discover More Section -->
+      <h4 class="text-white mt-3">Discover More</h4>
+      <div class="card-columns mt-3">
+        <!-- Sample image cards -->
+        <% data.sort(() => Math.random() - 0.5).slice(0, 20).forEach((entry) => { %>
+          <div class="card">
+            <img src="<%= entry.imgLink %>" class="card-img-top" alt="<%= entry.name %>" onerror="this.remove()" />
+            <div class="card-body">
+              <h4 class="card-title"><%= entry.nama %></h4>
+              <p class="card-text"><%= entry.desc %></p>
+            </div>
+            <div class="card-footer">
+              <a href="/<%= entry.id %>" class="btn btn-primary">Lihat Details</a>
+            </div>
+          </div>
+        <% }); %>
       </div>
     </div>
+    
     <script
       src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
       integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
