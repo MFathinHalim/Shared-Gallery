@@ -87,7 +87,7 @@ app.post("/", upload.single("image"), function (req, res) { return __awaiter(voi
                 nama = req.body.nama;
                 id = data.length + 1;
                 imgLink = "https://ik.imagekit.io/9hpbqscxd/SG/image-".concat(id, ".jpg");
-                fs.readFile(path.join(__dirname, "/public/images/uploads", "image-" + id + ".jpg"), function (err, data) {
+                fs.readFile(path.join(__dirname, "/public/images/uploads", "image-" + id + ".jpg"), function (err, dataImg) {
                     return __awaiter(this, void 0, void 0, function () {
                         return __generator(this, function (_a) {
                             switch (_a.label) {
@@ -95,7 +95,7 @@ app.post("/", upload.single("image"), function (req, res) { return __awaiter(voi
                                     if (err)
                                         throw err; // Fail if the file can't be read.
                                     return [4 /*yield*/, imagekit.upload({
-                                            file: data, //required
+                                            file: dataImg, //required
                                             fileName: "image-" + id + ".jpg", //required
                                             useUniqueFileName: false,
                                             folder: "SG",

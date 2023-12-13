@@ -62,11 +62,11 @@ app.post("/", upload.single("image"), async (req: Request, res: Response) => {
   const imgLink = `https://ik.imagekit.io/9hpbqscxd/SG/image-${id}.jpg`;
   fs.readFile(
     path.join(__dirname, "/public/images/uploads", "image-" + id + ".jpg"),
-    async function (err: any, data: any) {
+    async function (err: any, dataImg: any) {
       if (err) throw err; // Fail if the file can't be read.
       await imagekit.upload(
         {
-          file: data, //required
+          file: dataImg, //required
           fileName: "image-" + id + ".jpg", //required
           useUniqueFileName: false,
           folder: "SG",
