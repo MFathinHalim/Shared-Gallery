@@ -101,15 +101,18 @@ mongoose
           data: data,
         }); // Render the "index.ejs" file in the "views" directory
       });
-      app.get("/search", function (req: Request, res: Response) {
-        const searchTerm: any = req.query.term; // Dapatkan input pengguna
+      app.get("/search", function (req, res) {
+        const searchTerm: any = req.query.term; // Dapatkan input pengguna dan konversi ke huruf kecil
         const searchResults = data.filter(
-          (item) => item.nama && item.nama.includes(searchTerm || "") // Cek keberadaan item.nama sebelum menggunakan includes
+          (item) =>
+            (item.nama && item.nama.toLowerCase().includes(searchTerm.toLowerCase())) || // Cari dalam nama
+            (item.desc && item.desc.toLowerCase().includes(searchTerm.toLowerCase())) // Cari dalam deskripsi
         );
         res.render("index", {
           data: searchResults,
         });
       });
+      
       app.get("/:id", function (req: Request, res: Response) {
         const searchTerm: number = parseInt(req.params.id); // Dapatkan ID dari URL dan ubah ke tipe numerik jika perlu
         console.log(searchTerm);

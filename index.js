@@ -147,8 +147,11 @@ mongoose
             }); // Render the "index.ejs" file in the "views" directory
         });
         app.get("/search", function (req, res) {
-            var searchTerm = req.query.term; // Dapatkan input pengguna
-            var searchResults = data.filter(function (item) { return item.nama && item.nama.includes(searchTerm || ""); } // Cek keberadaan item.nama sebelum menggunakan includes
+            var searchTerm = req.query.term; // Dapatkan input pengguna dan konversi ke huruf kecil
+            var searchResults = data.filter(function (item) {
+                return (item.nama && item.nama.toLowerCase().includes(searchTerm.toLowerCase())) || // Cari dalam nama
+                    (item.desc && item.desc.toLowerCase().includes(searchTerm.toLowerCase()));
+            } // Cari dalam deskripsi
             );
             res.render("index", {
                 data: searchResults,
