@@ -1,8 +1,8 @@
 import { Express, Request, Response } from "express";
+const multer = require("multer");
 const express = require("express");
 const dotenv = require("dotenv");
 const fs = require("fs");
-const multer = require("multer");
 const path = require("path");
 const ImageKit = require("imagekit");
 const mongoose = require("mongoose");
@@ -10,6 +10,9 @@ const bodyParser = require("body-parser");
 const { mainModel } = require("./models/post");
 const axios = require("axios");
 dotenv.config();
+
+const app: Express = express();
+const port: number | string = process.env.PORT || 3000;
 
 var imagekit = new ImageKit({
   publicKey: process.env.publicImg,
@@ -25,22 +28,12 @@ interface Data {
 }
 
 var data: Data[];
-const storage = multer.diskStorage({
-  destination: function (req: Request, file: any, cb: any) {
-    cb(null, `public/images/uploads`);
-  },
-  filename: function (req: Request, file: any, cb: any) {
-    cb(null, `image-${data.length + 1}.jpg`);
-  },
-});
+
+const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
-const app: Express = express();
-const port: number | string = process.env.PORT || 3000;
-
-// Set EJS as the view engine
 app.set("view engine", "ejs");
-app.set("views", __dirname + "/views"); // Specify the directory where your views are located
+app.set("views", __dirname + "/views");
 app.use(express.static(path.join(__dirname, "/public")));
 app.use(bodyParser.json());
 app.use(
@@ -55,36 +48,48 @@ app.post("/", upload.single("image"), async (req: Request, res: Response) => {
     `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.GOOGLE_RECAPTCHA_SECRET_KEY}&response=${token}`
   );
   if (!response.data.success) return res.json({ msg: "reCAPTCHA tidak valid" });
-  //TODO first things, we will make the const variable from the req data
+
+  // TODO: Sesuaikan dengan data yang diunggah dari penyimpanan memori
   const desc = req.body.desc;
   const nama = req.body.nama;
   const id = data.length + 1;
-  const imgLink = `https://ik.imagekit.io/9hpbqscxd/SG/image-${id}.jpg`;
-  fs.readFile(
-    path.join(__dirname, "/public/images/uploads", "image-" + id + ".jpg"),
-    async function (err: any, data: any) {
-      if (err) throw err; // Fail if the file can't be read.
-      await imagekit.upload(
-        {
-          file: data, //required
-          fileName: "image-" + id + ".jpg", //required
-          useUniqueFileName: false,
-          folder: "SG",
-        },
-        function (error: any, result: any) {
-          if (error) console.log(error);
+
+  // Misalnya, untuk mengakses buffer dari file yang diunggah
+  if (req.file) {
+    const buffer = req.file.buffer;
+    await imagekit.upload(
+      {
+        file: buffer,
+        fileName: `image-${id}.jpg`,
+        useUniqueFileName: false,
+        folder: "SG",
+      },
+      async function (error: any, result: any) {
+        if (error) {
+          console.error("Error uploading to ImageKit:", error);
+          return res
+            .status(500)
+            .json({ msg: "Terjadi kesalahan saat mengunggah file" });
         }
-      );
-    }
-  );
-  await mainModel.create({
-    id,
-    nama,
-    desc,
-    imgLink,
-  });
-  data.unshift({ id, nama, desc, imgLink });
-  res.redirect("/" + id);
+
+        const imgLink = result.url;
+
+        // Lakukan apa pun yang perlu dilakukan setelah berhasil mengunggah ke ImageKit
+        console.log("Berhasil mengunggah ke ImageKit:", imgLink);
+
+        // Simpan ke basis data atau lakukan tindakan lainnya
+        await mainModel.create({
+          id,
+          nama,
+          desc,
+          imgLink,
+        });
+
+        data.unshift({ id, nama, desc, imgLink });
+        res.redirect("/" + id);
+      }
+    );
+  }
 });
 
 mongoose
