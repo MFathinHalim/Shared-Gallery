@@ -45,8 +45,8 @@
       .card {
         border-radius: 12px;
       }
-      .card-img-top {
-        border-radius: 12px 12px 0 0;
+      .card-img {
+        border-radius: 12px !important;
       }
       ::placeholder {
         color: var(--text) !important;
@@ -94,12 +94,18 @@
     <div class="container mt-3">
       <!-- Sample image cards -->
 
-      <div class="card mb-3">
-        <div class="row no-gutters">
-          <div class="col-md-4">
-            <img src="<%= entry.imgLink %>" class="card-img" alt="<%= entry.name %>" />
+      <div class="row">
+        <div class="col-md-6">
+          <div class="card mb-3">
+            <img
+              src="<%= entry.imgLink %>"
+              class="card-img"
+              alt="<%= entry.name %>" />
           </div>
-          <div class="col-md-8">
+        </div>
+
+        <div class="col-md-6 order-md-1">
+          <div class="card mb-3">
             <div class="card-body">
               <h5 class="card-title"><%= entry.nama %></h5>
               <p class="card-text"><%= entry.desc %></p>
@@ -111,8 +117,6 @@
             </div>
           </div>
         </div>
-      </div>
-      
       </div>
     </div>
     <script
