@@ -57,6 +57,14 @@
       ::placeholder {
         color: var(--text) !important;
       }
+      ::-webkit-scrollbar {
+        width: 3px;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background-color: var(--accent);
+        outline: 1px solid slategrey;
+      }
       .card-columns {
         column-count: 3;
       }
@@ -120,11 +128,103 @@
               <a href="<%= entry.imgLink %>" download="<%= entry.name %>.jpg">
                 <button class="btn btn-primary btn-sm">Download</button>
               </a>
+              <button class="btn btn-primary btn-sm" onclick="search()">
+                <i class="fa fa-share" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+          <div class="card mb-3">
+            <div class="card-body" style="max-height: 215px; overflow-y: auto">
+              <h6>Comments:</h6>
+              <% if (entry.comments.length > 0) { %> <% entry.comments.slice(0,
+              20).forEach((comment) => { %>
+              <hr />
+
+              <h6><%= comment.isi %></h6>
+              <% }); %> <% } else { %>
+              <hr />
+              <h6>Belum ada,</h6>
+              <hr />
+              <h6>Tambahkan untuk menjadi yang pertama !</h6>
+
+              <% } %>
+            </div>
+            <div class="card-footer">
+              <form
+                action="/<%= entry.id %>/comment"
+                method="post"
+                class="d-flex">
+                <div class="input-group flex-grow-1 mr-2">
+                  <input
+                    type="text"
+                    class="form-control rounded-lg"
+                    style="border-radius: 24px"
+                    id="comment"
+                    name="comment"
+                    autocomplete="off"
+                    placeholder="Tambah Komentar..."
+                    required />
+                </div>
+                <button type="submit" class="btn btn-primary">
+                  <i class="fa fa-plus"></i>
+                </button>
+              </form>
             </div>
           </div>
         </div>
       </div>
     </div>
+    <div class="container mt-3">
+      <h3 class="text-white">Recomendation</h3>
+      <div class="card-columns">
+        <!-- Sample image cards -->
+        <% data.sort(() => Math.random() - 0.5).slice(0,20).forEach((entry) => {
+        %>
+
+        <div class="card">
+          <img
+            src="<%= entry.imgLink %>"
+            class="card-img-top"
+            alt="Image 1"
+            onerror="this.remove()" />
+          <div class="card-body">
+            <h4 class="card-title"><%= entry.nama %></h4>
+            <p class="card-text"><%= entry.desc %></p>
+          </div>
+          <div class="card-footer">
+            <a class="btn btn-primary" href="/<%= entry.id %>">Lihat Details</a>
+          </div>
+        </div>
+        <% }); %>
+      </div>
+    </div>
+    <script>
+      function search() {
+        // Get the text field
+        var copyText = window.location.href;
+
+        // Copy the text inside the text field
+        if (navigator.share) {
+          navigator.clipboard.writeText(copyText);
+
+          navigator
+            .share({
+              title: "rejangpedia",
+              text: "artikel untuk sanak",
+              url: copyText,
+            })
+            .then(() => console.log("Successful share"))
+            .catch((error) => console.log("Error sharing", error));
+        } else {
+          try {
+            window.AndroidShareHandler.share(copyText);
+          } catch {
+            navigator.clipboard.writeText(copyText);
+            alert("Sudah Di Salin Ya, silahkan Beri ke Temanmu ya ^_^");
+          }
+        }
+      }
+    </script>
     <script
       src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
       integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"

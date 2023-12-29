@@ -87,7 +87,7 @@ app.post("/", upload.single("image"), function (req, res) { return __awaiter(voi
                         folder: "SG",
                     }, function (error, result) {
                         return __awaiter(this, void 0, void 0, function () {
-                            var imgLink;
+                            var imgLink, comments;
                             return __generator(this, function (_a) {
                                 switch (_a.label) {
                                     case 0:
@@ -100,17 +100,19 @@ app.post("/", upload.single("image"), function (req, res) { return __awaiter(voi
                                         imgLink = result.url;
                                         // Lakukan apa pun yang perlu dilakukan setelah berhasil mengunggah ke ImageKit
                                         console.log("Berhasil mengunggah ke ImageKit:", imgLink);
+                                        comments = [];
                                         // Simpan ke basis data atau lakukan tindakan lainnya
                                         return [4 /*yield*/, mainModel.create({
                                                 id: id,
                                                 nama: nama,
                                                 desc: desc,
                                                 imgLink: imgLink,
+                                                comments: comments,
                                             })];
                                     case 1:
                                         // Simpan ke basis data atau lakukan tindakan lainnya
                                         _a.sent();
-                                        data.unshift({ id: id, nama: nama, desc: desc, imgLink: imgLink });
+                                        data.unshift({ id: id, nama: nama, desc: desc, imgLink: imgLink, comments: comments });
                                         res.redirect("/" + id);
                                         return [2 /*return*/];
                                 }
@@ -124,6 +126,28 @@ app.post("/", upload.single("image"), function (req, res) { return __awaiter(voi
         }
     });
 }); });
+app.post("/:id/comment", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var entryId, comment, entry;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                entryId = parseInt(req.params.id);
+                comment = req.body.comment;
+                entry = data.find(function (item) { return item.id == entryId; });
+                if (!entry) {
+                    return [2 /*return*/, res.status(404).json({ msg: "gak ada" })];
+                }
+                entry.comments.push({ isi: comment });
+                return [4 /*yield*/, mainModel.findOneAndUpdate({
+                        id: entryId,
+                    }, { $push: { comments: { isi: comment } } })];
+            case 1:
+                _a.sent();
+                return [2 /*return*/, res.redirect("/".concat(entry.id))];
+        }
+    });
+}); });
+mongoose.set("strict", false);
 mongoose
     .connect(process.env.MONGODBURI, {
     useNewUrlParser: true,
@@ -131,8 +155,23 @@ mongoose
     serverSelectionTimeoutMS: 5000,
 })
     .then(function () {
-    mainModel.find({}, null).then(function (res) {
-        data = res;
+    mainModel
+        .updateMany({ $or: [{ comments: { $exists: false } }, { comments: { $size: 0 } }] }, { $set: { comments: [] } }, { upsert: true } // Menambahkan dokumen baru jika tidak ditemukan
+    )
+        .then(function (updateResult) {
+        console.log("".concat(updateResult.modifiedCount, " dokumen diperbarui"));
+        // Setelah updateMany selesai, ambil data terbaru dari database
+        return mainModel.find({});
+    })
+        .then(function (res) {
+        // Proses data dan tambahkan array kosong jika 'comments' tidak ada atau kosong
+        data = res.map(function (item) {
+            if (!item.comments || item.comments.length === 0) {
+                item.comments = [];
+            }
+            return item;
+        });
+        // Lanjutkan dengan logika atau tindakan selanjutnya di sini
         app.get("/", function (req, res) {
             res.render("index", {
                 data: data,
@@ -154,6 +193,7 @@ mongoose
             console.log(searchTerm);
             var searchResult = data.find(function (entry) { return entry.id == searchTerm; });
             res.render("img", {
+                data: data,
                 entry: searchResult,
             });
         });

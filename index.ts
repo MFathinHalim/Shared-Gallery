@@ -81,16 +81,17 @@ app.post("/", upload.single("image"), async (req: Request, res: Response) => {
 
         // Lakukan apa pun yang perlu dilakukan setelah berhasil mengunggah ke ImageKit
         console.log("Berhasil mengunggah ke ImageKit:", imgLink);
-
+        const comments: comment[] = [];
         // Simpan ke basis data atau lakukan tindakan lainnya
         await mainModel.create({
           id,
           nama,
           desc,
           imgLink,
+          comments,
         });
 
-        data.unshift({ id, nama, desc, imgLink });
+        data.unshift({ id, nama, desc, imgLink, comments });
         res.redirect("/" + id);
       }
     );
@@ -109,11 +110,16 @@ app.post("/:id/comment", async (req: Request, res: Response) => {
 
   entry.comments.push({ isi: comment });
 
-  await mainModel.findOneAndUpdate({
-    id: entryId,
-  });
-});
+  await mainModel.findOneAndUpdate(
+    {
+      id: entryId,
+    },
+    { $push: { comments: { isi: comment } } }
+  );
 
+  return res.redirect(`/${entry.id}`);
+});
+mongoose.set("strict", false);
 mongoose
   .connect(process.env.MONGODBURI, {
     useNewUrlParser: true,
@@ -121,36 +127,57 @@ mongoose
     serverSelectionTimeoutMS: 5000,
   })
   .then(() => {
-    mainModel.find({}, null).then((res: Data[]) => {
-      data = res;
-      app.get("/", (req: Request, res: Response) => {
-        res.render("index", {
-          data: data,
-        }); // Render the "index.ejs" file in the "views" directory
-      });
-      app.get("/search", function (req: Request, res: Response) {
-        const searchTerm: any = req.query.term; // Dapatkan input pengguna
-        const searchResults = data.filter(
-          (item) =>
-            item.nama &&
-            item.nama.toLowerCase().includes(searchTerm.toLowerCase() || "") // Cek keberadaan item.nama sebelum menggunakan includes
-        );
-        res.render("index", {
-          data: searchResults,
+    mainModel
+      .updateMany(
+        { $or: [{ comments: { $exists: false } }, { comments: { $size: 0 } }] },
+        { $set: { comments: [] } },
+        { upsert: true } // Menambahkan dokumen baru jika tidak ditemukan
+      )
+      .then((updateResult: any) => {
+        console.log(`${updateResult.modifiedCount} dokumen diperbarui`);
+
+        // Setelah updateMany selesai, ambil data terbaru dari database
+        return mainModel.find({});
+      })
+      .then((res: any) => {
+        // Proses data dan tambahkan array kosong jika 'comments' tidak ada atau kosong
+        data = res.map((item: any) => {
+          if (!item.comments || item.comments.length === 0) {
+            item.comments = [];
+          }
+          return item;
+        });
+
+        // Lanjutkan dengan logika atau tindakan selanjutnya di sini
+        app.get("/", (req: Request, res: Response) => {
+          res.render("index", {
+            data: data,
+          }); // Render the "index.ejs" file in the "views" directory
+        });
+        app.get("/search", function (req: Request, res: Response) {
+          const searchTerm: any = req.query.term; // Dapatkan input pengguna
+          const searchResults = data.filter(
+            (item) =>
+              item.nama &&
+              item.nama.toLowerCase().includes(searchTerm.toLowerCase() || "") // Cek keberadaan item.nama sebelum menggunakan includes
+          );
+          res.render("index", {
+            data: searchResults,
+          });
+        });
+        app.get("/:id", function (req: Request, res: Response) {
+          const searchTerm: number = parseInt(req.params.id); // Dapatkan ID dari URL dan ubah ke tipe numerik jika perlu
+          console.log(searchTerm);
+          const searchResult = data.find((entry) => entry.id == searchTerm);
+
+          res.render("img", {
+            data: data,
+            entry: searchResult,
+          });
+        });
+
+        app.listen(port, () => {
+          console.log(`[app]: app is running at http://localhost:${port}`);
         });
       });
-      app.get("/:id", function (req: Request, res: Response) {
-        const searchTerm: number = parseInt(req.params.id); // Dapatkan ID dari URL dan ubah ke tipe numerik jika perlu
-        console.log(searchTerm);
-        const searchResult = data.find((entry) => entry.id == searchTerm);
-
-        res.render("img", {
-          entry: searchResult,
-        });
-      });
-
-      app.listen(port, () => {
-        console.log(`[app]: app is running at http://localhost:${port}`);
-      });
-    });
   });
