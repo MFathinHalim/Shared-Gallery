@@ -20,11 +20,16 @@ var imagekit = new ImageKit({
   urlEndpoint: process.env.urlEndpoint,
 });
 
+interface comment {
+  isi: string;
+}
+
 interface Data {
   id: number;
   nama: string;
   desc: string;
   imgLink: string;
+  comments: comment[];
 }
 
 var data: Data[];
@@ -90,6 +95,23 @@ app.post("/", upload.single("image"), async (req: Request, res: Response) => {
       }
     );
   }
+});
+
+app.post("/:id/comment", async (req: Request, res: Response) => {
+  const entryId = parseInt(req.params.id);
+  const comment = req.body.comment;
+
+  const entry = data.find((item) => item.id == entryId);
+
+  if (!entry) {
+    return res.status(404).json({ msg: "gak ada" });
+  }
+
+  entry.comments.push({ isi: comment });
+
+  await mainModel.findOneAndUpdate({
+    id: entryId,
+  });
 });
 
 mongoose

@@ -13,6 +13,12 @@
     <link
       href="https://fonts.googleapis.com/css2?family=Karla:wght@500&family=Montserrat:wght@500&display=swap"
       rel="stylesheet" />
+    <meta property="og:image" content="<%= entry.imgLink %>" />
+    <% if(entry.name) { %>
+    <meta property="og:title" content="<%= entry.name %>" />
+    <% } %> <% if(entry.desc) { %>
+    <meta property="og:description" content="<%= entry.desc %>" />
+    <% } %>
     <style type="text/css" media="screen">
       body {
         font-family: "Karla";
