@@ -5,6 +5,11 @@ const postSchema = new Schema({
   nama: String,
   desc: String,
   imgLink: String,
+  comments: [
+    {
+      isi: String,
+    },
+  ],
 });
 
 module.exports = {

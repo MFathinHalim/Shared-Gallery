@@ -4,6 +4,7 @@
   "description": "A Shared Gallery For All People",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "tsc index.ts models/post.ts && node index.js"
   },
   "keywords": [
@@ -14,7 +15,8 @@
   "devDependencies": {
     "@types/ejs": "^3.1.5",
     "@types/express": "^4.17.21",
-    "@types/node": "^20.10.4",
+    "@types/multer": "^1.4.11",
+    "@types/node": "^20.10.5",
     "typescript": "^5.3.3"
   },
   "dependencies": {
