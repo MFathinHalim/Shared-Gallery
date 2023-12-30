@@ -58,6 +58,7 @@ app.post("/", upload.single("image"), async (req: Request, res: Response) => {
   const desc = req.body.desc;
   const nama = req.body.nama;
   const id = data.length + 1;
+
   // Misalnya, untuk mengakses buffer dari file yang diunggah
   if (req.file) {
     const buffer = req.file.buffer;
@@ -174,6 +175,7 @@ mongoose
             entry: searchResult,
           });
         });
+
         app.listen(port, () => {
           console.log(`[app]: app is running at http://localhost:${port}`);
         });
