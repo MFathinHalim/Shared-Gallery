@@ -154,15 +154,12 @@
             style="background-color: var(--secondary); color: var(--text)">
             <div class="card-body" style="max-height: 215px; overflow-y: auto">
               <h4>Comments:</h4>
+              <hr style="border: solid 1px var(--text)" />
               <% if (entry.comments.length > 0) { %> <% entry.comments.slice(0,
               20).forEach((comment) => { %>
-              <hr style="border: solid 1px var(--text)" />
-
               <h6><%= comment.isi %></h6>
               <% }); %> <% } else { %>
-              <hr style="border: solid 1px var(--text)" />
               <h6>Belum ada,</h6>
-              <hr style="border: solid 1px var(--text)" />
               <h6>Tambahkan untuk menjadi yang pertama !</h6>
 
               <% } %>
