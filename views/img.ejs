@@ -16,7 +16,14 @@
     <!-- Meta tag khusus untuk Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content="<%= entry.imgLink %>" />
+    <meta property="og:type" content="On Shared Gallery" />
+    <meta name="application-name" content="Shared Gallery" />
 
+    <% if (entry.nama) { %>
+    <meta property="og:title" content="<%= entry.nama %>" />
+    <% } %> <% if (entry.desc) { %>
+    <meta name="twitter:description" content="<%= entry.desc %>" />
+    <% } %>
     <!-- Meta tag khusus untuk Facebook -->
     <meta property="og:image" content="<%= entry.imgLink %>" />
     <meta property="og:image:width" content="WIDTH_PIXELS" />
