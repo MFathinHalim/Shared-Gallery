@@ -95,6 +95,9 @@
         background-color: var(--accent);
         outline: 1px solid slategrey;
       }
+      .card {
+        border: solid 0.4px var(--primary);
+      }
     </style>
   </head>
   <body>
@@ -105,20 +108,16 @@
         <% data.sort(() => Math.random() - 0.5).slice(0,20).forEach((entry) => {
         %>
 
-        <div class="card">
+        <a href="/<%= entry.id %>">
           <img
             src="<%= entry.imgLink %>"
-            class="card-img-top"
+            class="m-2 card"
+            style="border-radius: 24px"
             alt="Image 1"
             onerror="this.remove()" />
-          <div class="card-body">
-            <h4 class="card-title"><%= entry.nama %></h4>
-            <p class="card-text"><%= entry.desc %></p>
-          </div>
-          <div class="card-footer">
-            <a class="btn btn-primary" href="/<%= entry.id %>">Lihat Details</a>
-          </div>
-        </div>
+          <p class="ml-3 text-white"><%= entry.nama %></p>
+        </a>
+
         <% }); %>
       </div>
     </div>

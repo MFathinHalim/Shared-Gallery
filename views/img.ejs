@@ -49,10 +49,10 @@
         background-color: var(--primary);
       }
       .card {
-        border-radius: 12px;
+        border-radius: 24px;
       }
       .card-img {
-        border-radius: 12px !important;
+        border-radius: 24px !important;
       }
       ::placeholder {
         color: var(--text) !important;
@@ -146,18 +146,20 @@
               </button>
             </div>
           </div>
-          <div class="card mb-3">
+          <div
+            class="card mb-3"
+            style="background-color: var(--secondary); color: var(--text)">
             <div class="card-body" style="max-height: 215px; overflow-y: auto">
               <h4>Comments:</h4>
               <% if (entry.comments.length > 0) { %> <% entry.comments.slice(0,
               20).forEach((comment) => { %>
-              <hr />
+              <hr style="border: solid 1px var(--text)" />
 
               <h6><%= comment.isi %></h6>
               <% }); %> <% } else { %>
-              <hr />
+              <hr style="border: solid 1px var(--text)" />
               <h6>Belum ada,</h6>
-              <hr />
+              <hr style="border: solid 1px var(--text)" />
               <h6>Tambahkan untuk menjadi yang pertama !</h6>
 
               <% } %>
@@ -194,20 +196,16 @@
         <% data.sort(() => Math.random() - 0.5).slice(0,20).forEach((entry) => {
         %>
 
-        <div class="card">
+        <a href="/<%= entry.id %>">
           <img
             src="<%= entry.imgLink %>"
-            class="card-img-top"
+            class="m-2 card"
+            style="border-radius: 24px"
             alt="Image 1"
             onerror="this.remove()" />
-          <div class="card-body">
-            <h4 class="card-title"><%= entry.nama %></h4>
-            <p class="card-text"><%= entry.desc %></p>
-          </div>
-          <div class="card-footer">
-            <a class="btn btn-primary" href="/<%= entry.id %>">Lihat Details</a>
-          </div>
-        </div>
+          <p class="ml-3 text-white"><%= entry.nama %></p>
+        </a>
+
         <% }); %>
       </div>
     </div>
