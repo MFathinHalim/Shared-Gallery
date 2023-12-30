@@ -76,12 +76,6 @@
         border-radius: 30px;
       }
 
-      @media (max-width: 991px) {
-        .card-columns {
-          column-count: 2;
-        }
-      }
-
       @media (max-width: 767px) {
         .card-columns {
           column-count: 1;
@@ -97,6 +91,14 @@
       }
       .card {
         border: solid 0.4px var(--primary);
+      }
+      @media (max-width: 991px) {
+        .card-columns {
+          column-count: 2;
+        }
+        ::-webkit-scrollbar {
+          width: 0px;
+        }
       }
     </style>
   </head>
