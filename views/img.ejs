@@ -13,12 +13,15 @@
     <link
       href="https://fonts.googleapis.com/css2?family=Karla:wght@500&family=Montserrat:wght@500&display=swap"
       rel="stylesheet" />
+    <!-- Meta tag khusus untuk Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="<%= entry.imgLink %>" />
+
+    <!-- Meta tag khusus untuk Facebook -->
     <meta property="og:image" content="<%= entry.imgLink %>" />
-    <% if(entry.name) { %>
-    <meta property="og:title" content="<%= entry.name %>" />
-    <% } %> <% if(entry.desc) { %>
-    <meta property="og:description" content="<%= entry.desc %>" />
-    <% } %>
+    <meta property="og:image:width" content="WIDTH_PIXELS" />
+    <meta property="og:image:height" content="HEIGHT_PIXELS" />
+
     <style type="text/css" media="screen">
       body {
         font-family: "Karla";
