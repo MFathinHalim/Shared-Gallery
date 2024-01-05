@@ -114,19 +114,7 @@
           column-count: 1;
         }
       }
-      body {
-        background: linear-gradient(
-            to bottom,
-            rgba(18, 18, 18, 0.94),
-            rgba(18, 18, 18, 1)
-          ),
-          url("<%= entry.imgLink %>");
-        backdrop-filter: blur(15px);
-        height: 100%;
-        background-size: cover;
-        background-position: top;
-        background-repeat: no-repeat;
-      }
+
       .card {
         border: solid 0.4px var(--primary);
       }
@@ -206,7 +194,7 @@
       <h3 class="text-white">Recomendation</h3>
       <div class="card-columns">
         <!-- Sample image cards -->
-        <% data.sort(() => Math.random() - 0.5).slice(0,20).forEach((entry) => {
+        <% data.sort(() => Math.random() - 0.5).slice(0,7).forEach((entry) => {
         %>
 
         <a href="/<%= entry.id %>">
