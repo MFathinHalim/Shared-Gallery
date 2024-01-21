@@ -133,7 +133,7 @@
         <div class="col-md-6">
           <div class="card mb-3">
             <img
-              src="<%= entry.imgLink %>?updatedAt=1705798245623"
+              src="<%= entry.imgLink.includes('imagekit') ? entry.imgLink : entry.imgLink + '?updatedAt=1705798245623' %>"
               class="card-img"
               alt="<%= entry.name %>" />
           </div>
@@ -203,7 +203,7 @@
 
         <a href="/<%= entry.id %>">
           <img
-            src="<%= entry.imgLink %>?updatedAt=1705798245623"
+            src="<%= entry.imgLink.includes('imagekit') ? entry.imgLink : entry.imgLink + '?updatedAt=1705798245623' %>"
             class="m-2 card"
             style="border-radius: 24px; max-height: 550px; object-fit: cover"
             alt="Image 1"
