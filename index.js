@@ -65,7 +65,7 @@ app.use(bodyParser.urlencoded({
     extended: true,
 }));
 app.post("/", upload.single("image"), function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var token, response, desc, nama, id, buffer;
+    var token, response, desc, nama, id, imgLink, buffer, comments;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -87,42 +87,42 @@ app.post("/", upload.single("image"), function (req, res) { return __awaiter(voi
                         folder: "SG",
                     }, function (error, result) {
                         return __awaiter(this, void 0, void 0, function () {
-                            var imgLink, comments;
                             return __generator(this, function (_a) {
-                                switch (_a.label) {
-                                    case 0:
-                                        if (error) {
-                                            console.error("Error uploading to ImageKit:", error);
-                                            return [2 /*return*/, res
-                                                    .status(500)
-                                                    .json({ msg: "Terjadi kesalahan saat mengunggah file" })];
-                                        }
-                                        imgLink = result.url;
-                                        // Lakukan apa pun yang perlu dilakukan setelah berhasil mengunggah ke ImageKit
-                                        console.log("Berhasil mengunggah ke ImageKit:", imgLink);
-                                        comments = [];
-                                        // Simpan ke basis data atau lakukan tindakan lainnya
-                                        return [4 /*yield*/, mainModel.create({
-                                                id: id,
-                                                nama: nama,
-                                                desc: desc,
-                                                imgLink: imgLink,
-                                                comments: comments,
-                                            })];
-                                    case 1:
-                                        // Simpan ke basis data atau lakukan tindakan lainnya
-                                        _a.sent();
-                                        data.unshift({ id: id, nama: nama, desc: desc, imgLink: imgLink, comments: comments });
-                                        res.redirect("/" + id);
-                                        return [2 /*return*/];
+                                if (error) {
+                                    console.error("Error uploading to ImageKit:", error);
+                                    return [2 /*return*/, res
+                                            .status(500)
+                                            .json({ msg: "Terjadi kesalahan saat mengunggah file" })];
                                 }
+                                imgLink = result.url;
+                                return [2 /*return*/];
                             });
                         });
                     })];
             case 2:
                 _a.sent();
-                _a.label = 3;
-            case 3: return [2 /*return*/];
+                return [3 /*break*/, 4];
+            case 3:
+                if (req.body.link) {
+                    imgLink = req.body.link;
+                }
+                _a.label = 4;
+            case 4:
+                comments = [];
+                // Simpan ke basis data atau lakukan tindakan lainnya
+                return [4 /*yield*/, mainModel.create({
+                        id: id,
+                        nama: nama,
+                        desc: desc,
+                        imgLink: imgLink,
+                        comments: comments,
+                    })];
+            case 5:
+                // Simpan ke basis data atau lakukan tindakan lainnya
+                _a.sent();
+                data.unshift({ id: id, nama: nama, desc: desc, imgLink: imgLink, comments: comments });
+                res.redirect("/" + id);
+                return [2 /*return*/];
         }
     });
 }); });

@@ -58,7 +58,7 @@ app.post("/", upload.single("image"), async (req: Request, res: Response) => {
   const desc = req.body.desc;
   const nama = req.body.nama;
   const id = data.length + 1;
-
+  let imgLink;
   // Misalnya, untuk mengakses buffer dari file yang diunggah
   if (req.file) {
     const buffer = req.file.buffer;
@@ -77,25 +77,24 @@ app.post("/", upload.single("image"), async (req: Request, res: Response) => {
             .json({ msg: "Terjadi kesalahan saat mengunggah file" });
         }
 
-        const imgLink = result.url;
-
-        // Lakukan apa pun yang perlu dilakukan setelah berhasil mengunggah ke ImageKit
-        console.log("Berhasil mengunggah ke ImageKit:", imgLink);
-        const comments: comment[] = [];
-        // Simpan ke basis data atau lakukan tindakan lainnya
-        await mainModel.create({
-          id,
-          nama,
-          desc,
-          imgLink,
-          comments,
-        });
-
-        data.unshift({ id, nama, desc, imgLink, comments });
-        res.redirect("/" + id);
+        imgLink = result.url;
       }
     );
+  } else if (req.body.link) {
+    imgLink = req.body.link;
   }
+  const comments: comment[] = [];
+  // Simpan ke basis data atau lakukan tindakan lainnya
+  await mainModel.create({
+    id,
+    nama,
+    desc,
+    imgLink,
+    comments,
+  });
+
+  data.unshift({ id, nama, desc, imgLink, comments });
+  res.redirect("/" + id);
 });
 
 app.post("/:id/comment", async (req: Request, res: Response) => {
