@@ -87,27 +87,42 @@ app.post("/", upload.single("image"), function (req, res) { return __awaiter(voi
                         folder: "SG",
                     }, function (error, result) {
                         return __awaiter(this, void 0, void 0, function () {
+                            var comments;
                             return __generator(this, function (_a) {
-                                if (error) {
-                                    console.error("Error uploading to ImageKit:", error);
-                                    return [2 /*return*/, res
-                                            .status(500)
-                                            .json({ msg: "Terjadi kesalahan saat mengunggah file" })];
+                                switch (_a.label) {
+                                    case 0:
+                                        if (error) {
+                                            console.error("Error uploading to ImageKit:", error);
+                                            return [2 /*return*/, res
+                                                    .status(500)
+                                                    .json({ msg: "Terjadi kesalahan saat mengunggah file" })];
+                                        }
+                                        imgLink = result.url;
+                                        comments = [];
+                                        // Simpan ke basis data atau lakukan tindakan lainnya
+                                        return [4 /*yield*/, mainModel.create({
+                                                id: id,
+                                                nama: nama,
+                                                desc: desc,
+                                                imgLink: imgLink,
+                                                comments: comments,
+                                            })];
+                                    case 1:
+                                        // Simpan ke basis data atau lakukan tindakan lainnya
+                                        _a.sent();
+                                        data.unshift({ id: id, nama: nama, desc: desc, imgLink: imgLink, comments: comments });
+                                        res.redirect("/" + id);
+                                        return [2 /*return*/];
                                 }
-                                imgLink = result.url;
-                                return [2 /*return*/];
                             });
                         });
                     })];
             case 2:
                 _a.sent();
-                return [3 /*break*/, 4];
+                return [3 /*break*/, 5];
             case 3:
-                if (req.body.link) {
-                    imgLink = req.body.link;
-                }
-                _a.label = 4;
-            case 4:
+                if (!req.body.link) return [3 /*break*/, 5];
+                imgLink = req.body.link;
                 comments = [];
                 // Simpan ke basis data atau lakukan tindakan lainnya
                 return [4 /*yield*/, mainModel.create({
@@ -117,12 +132,13 @@ app.post("/", upload.single("image"), function (req, res) { return __awaiter(voi
                         imgLink: imgLink,
                         comments: comments,
                     })];
-            case 5:
+            case 4:
                 // Simpan ke basis data atau lakukan tindakan lainnya
                 _a.sent();
                 data.unshift({ id: id, nama: nama, desc: desc, imgLink: imgLink, comments: comments });
                 res.redirect("/" + id);
-                return [2 /*return*/];
+                _a.label = 5;
+            case 5: return [2 /*return*/];
         }
     });
 }); });

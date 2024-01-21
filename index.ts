@@ -78,23 +78,35 @@ app.post("/", upload.single("image"), async (req: Request, res: Response) => {
         }
 
         imgLink = result.url;
+        const comments: comment[] = [];
+        // Simpan ke basis data atau lakukan tindakan lainnya
+        await mainModel.create({
+          id,
+          nama,
+          desc,
+          imgLink,
+          comments,
+        });
+
+        data.unshift({ id, nama, desc, imgLink, comments });
+        res.redirect("/" + id);
       }
     );
   } else if (req.body.link) {
     imgLink = req.body.link;
-  }
-  const comments: comment[] = [];
-  // Simpan ke basis data atau lakukan tindakan lainnya
-  await mainModel.create({
-    id,
-    nama,
-    desc,
-    imgLink,
-    comments,
-  });
+    const comments: comment[] = [];
+    // Simpan ke basis data atau lakukan tindakan lainnya
+    await mainModel.create({
+      id,
+      nama,
+      desc,
+      imgLink,
+      comments,
+    });
 
-  data.unshift({ id, nama, desc, imgLink, comments });
-  res.redirect("/" + id);
+    data.unshift({ id, nama, desc, imgLink, comments });
+    res.redirect("/" + id);
+  }
 });
 
 app.post("/:id/comment", async (req: Request, res: Response) => {
