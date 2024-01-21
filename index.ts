@@ -142,12 +142,23 @@ mongoose
       .then((res: any) => {
         // Proses data dan tambahkan array kosong jika 'comments' tidak ada atau kosong
         data = res.map((item: any) => {
+          // Pemeriksaan tambahan untuk memeriksa apakah kata "gay" ada dalam data
           if (!item.comments || item.comments.length === 0) {
             item.comments = [];
           }
-          return item;
-        });
 
+          // Pemeriksaan apakah kata "gay" ada dalam data
+          if (
+            !item.nama ||
+            !item.nama.includes("gay") ||
+            !item.desc ||
+            !item.desc.includes("gay")
+          ) {
+            return item;
+          }
+
+          return null; // Jika kata "gay" ada, kembalikan null
+        });
         // Lanjutkan dengan logika atau tindakan selanjutnya di sini
         app.get("/", (req: Request, res: Response) => {
           res.render("index", {
