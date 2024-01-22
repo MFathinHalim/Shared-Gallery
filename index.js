@@ -199,6 +199,7 @@ mongoose
         app.get("/", function (req, res) {
             res.render("index", {
                 data: data,
+                searchTerm: "",
             }); // Render the "index.ejs" file in the "views" directory
         });
         app.get("/search", function (req, res) {
@@ -210,15 +211,16 @@ mongoose
             );
             res.render("index", {
                 data: searchResults,
+                searchTerm: searchTerm,
             });
         });
         app.get("/:id", function (req, res) {
             var searchTerm = parseInt(req.params.id); // Dapatkan ID dari URL dan ubah ke tipe numerik jika perlu
-            console.log(searchTerm);
             var searchResult = data.find(function (entry) { return entry.id == searchTerm; });
             res.render("img", {
                 data: data,
                 entry: searchResult,
+                searchTerm: "",
             });
         });
         app.listen(port, function () {

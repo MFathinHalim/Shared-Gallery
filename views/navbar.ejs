@@ -22,28 +22,53 @@
   <ul class="navbar-nav mr-auto">
     <li class="nav-item active">
       <a
-        class="nav-link p-2"
-        style="background: #9dcbd8; color: black; border-radius: 34px"
+        class="nav-link"
+        style="
+          background: #9dcbd8;
+          color: black;
+          border-radius: 34px;
+          padding: 9px;
+        "
         href="#"
         data-toggle="modal"
         data-target="#uploadModal">
-        Create
+        <strong>Create</strong>
       </a>
     </li>
   </ul>
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <form class="form-inline w-100">
+    <form class="form-inline w-100 ml-3">
       <!-- Add w-100 class to make the form fill the width -->
-      <input
-        class="form-control ml-sm-2 mr-sm-2 w-100 rounded-pill"
-        style="border-radius: 35px"
-        type="search"
-        id="searchInput"
-        placeholder="Search"
-        autocomplete="off"
-        aria-label="Search"
-        onkeypress="handleKeyPress(event)" />
+      <div class="input-group w-100">
+        <div class="input-group-prepend">
+          <span
+            class="input-group-text pl-3 pr-0"
+            style="
+              background-color: var(--secondary);
+              border: 2px solid var(--secondary) !important;
+              border-radius: 34px 0px 0px 34px;
+            ">
+            <i class="fa fa-search text-white"></i>
+            <!-- Assuming you're using Bootstrap icons (Bi) -->
+            <!-- If not using Bootstrap icons, you can replace the above line with your preferred search icon code -->
+          </span>
+        </div>
+        <input
+          class="form-control rounded-pill"
+          style="
+            padding: 9px;
+            border-radius: 0px 34px 34px 0px;
+            border: 2px solid var(--secondary) !important;
+          "
+          type="search"
+          value="<%= searchTerm ? searchTerm : '' %>"
+          id="searchInput"
+          placeholder="Search"
+          autocomplete="off"
+          aria-label="Search"
+          onkeypress="handleKeyPress(event)" />
+      </div>
 
       <script>
         function handleKeyPress(event) {
@@ -75,20 +100,26 @@
   </button>
 </nav>
 
-<div class="modal" id="uploadModal" tabindex="-1" role="dialog">
+<div
+  class="modal"
+  id="uploadModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="uploadModalLabel"
+  aria-describedby="uploadModalBody">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Upload Image</h5>
+        <h5 class="modal-title" id="uploadModalLabel">Upload Image</h5>
         <button
           type="button"
-          class="close"
+          class="close text-white"
           data-dismiss="modal"
           aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" id="uploadModalBody">
         <form
           action="/"
           method="post"
@@ -101,6 +132,7 @@
               class="form-control"
               id="imageName"
               name="nama"
+              style="border: 2px solid var(--accent) !important"
               autocomplete="off"
               placeholder="Enter name"
               required />
@@ -111,6 +143,7 @@
               class="form-control"
               id="imageDesc"
               rows="3"
+              style="border: 2px solid var(--accent) !important"
               name="desc"
               placeholder="Enter description"
               required></textarea>
@@ -129,6 +162,7 @@
               type="text"
               class="form-control"
               id="imageLink"
+              style="border: 2px solid var(--accent) !important"
               name="link"
               autocomplete="off"
               placeholder="Enter Link" />
@@ -148,9 +182,115 @@
     </div>
   </div>
 </div>
+
 <script>
   function onSubmit(token) {
     // Handle form submission or any other action you want after reCAPTCHA is verified
     document.getElementById("myForm").submit();
   }
 </script>
+<style type="text/css" media="screen">
+  .container-fluid {
+    padding-left: 80px !important;
+    padding-right: 80px !important;
+    margin: 0px;
+  }
+  body {
+    font-family: "Karla";
+  }
+  /* Custom styles for the Pinterest-style layout */
+  :root {
+    --text: #f5f7fe;
+    --background: #060811;
+    --primary: #cacdd8;
+    --secondary: #3d4648;
+    --accent: #67b86a;
+  }
+  body,
+  nav {
+    background-color: var(--background);
+  }
+  .nav-brand {
+    font-family: "Montserrat" !important;
+  }
+  input,
+  textarea {
+    background-color: var(--secondary) !important;
+    color: var(--text) !important;
+    border: 2px solid var(--secondary) !important;
+  }
+  .card {
+    border: none;
+  }
+  .card,
+  img {
+    border-radius: 16px !important;
+  }
+  .card-img-top {
+    border-radius: 12px 12px 0 0;
+  }
+  ::placeholder {
+    color: var(--text) !important;
+  }
+  .card-columns {
+    column-count: 5;
+  }
+
+  .card {
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  .modal-header,
+  .modal-footer,
+  .modal-body {
+    color: var(--text);
+    background-color: var(--secondary);
+  }
+  .btn-primary {
+    background-color: var(--accent);
+    border: solid var(--accent);
+    color: #11181a;
+  }
+  .btn-primary,
+  .modal-dialog {
+    border-radius: 30px;
+  }
+  @media (max-width: 1400px) {
+    .card-columns {
+      column-count: 4;
+    }
+  }
+  @media (max-width: 991px) {
+    .container-fluid {
+      padding: 10px !important;
+      padding-right: 25px !important;
+      margin: 0px !important;
+    }
+    .card-columns {
+      column-count: 3;
+    }
+    ::-webkit-scrollbar {
+      width: 0px;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .card-columns {
+      column-count: 2;
+    }
+  }
+  @media (max-width: 460px) {
+    .card-columns {
+      column-count: 1;
+    }
+  }
+  ::-webkit-scrollbar {
+    width: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--accent);
+    outline: 1px solid slategrey;
+  }
+</style>

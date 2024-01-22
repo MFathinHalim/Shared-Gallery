@@ -21,109 +21,26 @@
     <link
       href="https://fonts.googleapis.com/css2?family=Karla:wght@500&family=Montserrat:wght@500&display=swap"
       rel="stylesheet" />
-    <style type="text/css" media="screen">
-      body {
-        font-family: "Karla";
-      }
-      /* Custom styles for the Pinterest-style layout */
-      :root {
-        --text: #e7edef;
-        --background: #11181a;
-        --primary: #9dcbd8;
-        --secondary: #3d4648;
-        --accent: #66b3ca;
-      }
-      body,
-      nav {
-        background-color: var(--background);
-      }
-      .nav-brand {
-        font-family: "Montserrat" !important;
-      }
-      input,
-      textarea {
-        background-color: var(--secondary) !important;
-        color: var(--text) !important;
-        border: 2px solid var(--accent) !important;
-      }
-      .card {
-        border: none;
-        background-color: var(--primary);
-      }
-      .card {
-        border-radius: 12px;
-      }
-      .card-img-top {
-        border-radius: 12px 12px 0 0;
-      }
-      ::placeholder {
-        color: var(--text) !important;
-      }
-      .card-columns {
-        column-count: 3;
-      }
-
-      .card {
-        display: inline-block;
-        width: 100%;
-        margin-bottom: 20px;
-      }
-      .modal-header,
-      .modal-footer,
-      .modal-body {
-        color: var(--text);
-        background-color: var(--secondary);
-      }
-      .btn-primary {
-        background-color: var(--accent);
-        border: solid var(--accent);
-        color: #11181a;
-      }
-      .btn-primary,
-      .modal-dialog {
-        border-radius: 30px;
-      }
-      @media (max-width: 991px) {
-        .card-columns {
-          column-count: 2;
-        }
-        ::-webkit-scrollbar {
-          width: 0px;
-        }
-      }
-      @media (max-width: 767px) {
-        .card-columns {
-          column-count: 1;
-        }
-      }
-      ::-webkit-scrollbar {
-        width: 3px;
-      }
-
-      ::-webkit-scrollbar-thumb {
-        background-color: var(--accent);
-        outline: 1px solid slategrey;
-      }
-      .card {
-        border: solid 0.4px var(--primary);
-      }
-    </style>
   </head>
   <body>
     <%- include("navbar") %>
-    <div class="container mt-3">
+    <div class="container-fluid mt-3">
       <div class="card-columns">
         <!-- Sample image cards -->
-        <% data.sort(() => Math.random() - 0.5).slice(0,20).forEach((entry) => {
+        <% data.sort(() => Math.random() - 0.5).slice(0,40).forEach((entry) => {
         %>
 
-        <a href="/<%= entry.id %>">
+        <a href="/<%= entry.id %>" class="card bg-transparent">
           <img
+            class="card"
             src="<%= entry.imgLink %><% if(entry.imgLink && entry.imgLink.includes('imagekit.io')) { %>?updatedAt=1705798245623<% } %>"
-            class="m-2 card"
-            style="border-radius: 24px; max-height: 550px; object-fit: cover"
-            alt="Image 1"
-            onerror="this.remove()" />
+            style="
+              border-radius: 24px;
+              max-height: <%= Math.floor(Math.random() * (500 - 350 + 1)) + 350
+                %>px;
+              object-fit: cover;
+            " />
+
           <p class="ml-3 text-white"><%= entry.nama %></p>
         </a>
 

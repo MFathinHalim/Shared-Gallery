@@ -32,97 +32,6 @@
     <meta property="og:image" content="<%= entry.imgLink %>" />
     <meta property="og:image:width" content="WIDTH_PIXELS" />
     <meta property="og:image:height" content="HEIGHT_PIXELS" />
-
-    <style type="text/css" media="screen">
-      body {
-        font-family: "Karla";
-      }
-      /* Custom styles for the Pinterest-style layout */
-      :root {
-        --text: #e7edef;
-        --background: #11181a;
-        --primary: #9dcbd8;
-        --secondary: #3d4648;
-        --accent: #66b3ca;
-      }
-      body,
-      nav {
-        background-color: var(--background);
-      }
-      .nav-brand {
-        font-family: "Montserrat" !important;
-      }
-      input,
-      textarea {
-        background-color: var(--secondary) !important;
-        color: var(--text) !important;
-        border: 2px solid var(--accent) !important;
-      }
-      .card {
-        border: none;
-        background-color: var(--primary);
-      }
-      .card {
-        border-radius: 24px;
-      }
-      .card-img {
-        border-radius: 24px !important;
-      }
-      ::placeholder {
-        color: var(--text) !important;
-      }
-
-      .card-columns {
-        column-count: 3;
-      }
-
-      .card {
-        display: inline-block;
-        width: 100%;
-        margin-bottom: 20px;
-      }
-      .modal-header,
-      .modal-footer,
-      .modal-body {
-        color: var(--text);
-        background-color: var(--secondary);
-      }
-      .btn-primary {
-        background-color: var(--accent);
-        border: solid var(--accent);
-        color: #11181a;
-      }
-      .btn-primary,
-      .modal-dialog {
-        border-radius: 30px;
-      }
-      ::-webkit-scrollbar {
-        width: 3px;
-      }
-
-      ::-webkit-scrollbar-thumb {
-        background-color: var(--accent);
-        outline: 1px solid slategrey;
-      }
-      @media (max-width: 991px) {
-        .card-columns {
-          column-count: 2;
-        }
-        ::-webkit-scrollbar {
-          width: 0px;
-        }
-      }
-
-      @media (max-width: 767px) {
-        .card-columns {
-          column-count: 1;
-        }
-      }
-
-      .card {
-        border: solid 0.4px var(--primary);
-      }
-    </style>
   </head>
   <body>
     <%- include("navbar") %>
@@ -140,10 +49,16 @@
         </div>
 
         <div class="col-md-6 order-md-1">
-          <div class="card mb-3">
+          <div class="card mb-3" style="background-color: var(--primary)">
             <div class="card-body">
-              <h5 class="card-title"><%= entry.nama %></h5>
+              <% if (entry.nama || entry.desc) { %> <% if (entry.nama) { %>
+              <h4 class="card-title"><strong><%= entry.nama %></strong></h4>
+              <% } %> <% if (entry.desc) { %>
               <p class="card-text"><%= entry.desc %></p>
+              <% } }else { %>
+              <h4 class="card-title"><strong>Tidak Ada Deskripsi</strong></h4>
+
+              <% } %>
             </div>
             <div class="card-footer">
               <a href="<%= entry.imgLink %>" download="<%= entry.name %>.jpg">
@@ -178,7 +93,10 @@
                   <input
                     type="text"
                     class="form-control rounded-lg"
-                    style="border-radius: 24px"
+                    style="
+                      border-radius: 24px;
+                      border: 2px solid var(--accent) !important;
+                    "
                     id="comment"
                     name="comment"
                     autocomplete="off"
@@ -194,11 +112,11 @@
         </div>
       </div>
     </div>
-    <div class="container mt-3">
-      <h3 class="text-white">Recomendation</h3>
+    <div class="container-fluid mt-3 text-center">
+      <h3 class="text-white">More Explore</h3>
       <div class="card-columns">
         <!-- Sample image cards -->
-        <% data.sort(() => Math.random() - 0.5).slice(0,7).forEach((entry) => {
+        <% data.sort(() => Math.random() - 0.5).slice(0,30).forEach((entry) => {
         %>
 
         <a href="/<%= entry.id %>">
