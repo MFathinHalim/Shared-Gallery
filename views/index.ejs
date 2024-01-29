@@ -71,7 +71,7 @@
         ) {
           console.log("p")
         const cardContainer = document.getElementById("cardContainer");
-        const newData = datalist.slice(dataNow, dataNow + 40).sort(() => Math.random() - 0.5);
+        const newData = datalist.sort(() => Math.random() - 0.5).slice(dataNow, dataNow + 40).sort(() => Math.random() - 0.5);
 
         newData.forEach((entry) => {
           const card = document.createElement("a");
