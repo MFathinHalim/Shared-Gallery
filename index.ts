@@ -177,6 +177,12 @@ mongoose
             searchTerm: "",
           }); // Render the "index.ejs" file in the "views" directory
         });
+        app.get("/api/getData", (req: Request, res: Response) => {
+          res.send({
+            data: data,
+            searchTerm: "",
+          });
+        });
         app.get("/search", function (req: Request, res: Response) {
           const searchTerm: any = req.query.term; // Dapatkan input pengguna
           const searchResults = data.filter(

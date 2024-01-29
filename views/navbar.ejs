@@ -24,6 +24,10 @@ body {
   .modal-header, .modal-body {
   background: #272829 !important;
   }
+  .modal-header {
+    border-bottom: none;
+    padding-bottom: 3px !important;
+  }
 </style>
 <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
   <a class="navbar-brand" href="/"
@@ -46,7 +50,7 @@ body {
         href="#"
         data-toggle="modal"
         data-target="#uploadModal">
-        <strong>Create</strong>
+        <strong>Add Image</strong>
       </a>
     </li>
   </ul>
@@ -78,7 +82,7 @@ body {
           type="search"
           value="<%= searchTerm ? searchTerm : '' %>"
           id="searchInput"
-          placeholder="Search"
+          placeholder="Search (∩˃ω˂∩)"
           autocomplete="off"
           aria-label="Search"
           onkeypress="handleKeyPress(event)" />
@@ -115,7 +119,7 @@ body {
 </nav>
 
 <div
-  class="modal"
+  class="modal fade"
   id="uploadModal"
   tabindex="-1"
   role="dialog"
@@ -124,7 +128,7 @@ body {
   <div class="modal-dialog bg-transparent" style="border-radius: 12px 12px 0 0 !important;" role="document">
     <div class="modal-content shadow" style="background: none; border: none">
       <div class="modal-header"style="border-radius: 12px 12px 0 0!important;">
-        <h5 class="modal-title" id="uploadModalLabel">Upload Image</h5>
+        <h5 class="modal-title" id="uploadModalLabel">Add Image ⸜(｡˃ ᵕ ˂ )⸝♡</h5>
         <button
           type="button"
           class="close text-white"
@@ -219,6 +223,10 @@ body {
     --secondary: #3d4648;
     --accent: #67b86a;
   }
+  .btn-primary:hover {
+    background-color: var(--secondary) !important;
+    border: 3px solid var(--accent) !important;
+  }
   body,
   nav {
     background-color: var(--background);
@@ -306,4 +314,7 @@ body {
     background-color: var(--accent);
     outline: 1px solid slategrey;
   }
+
+
+</style>
 
