@@ -39,6 +39,21 @@
       border-radius: 12px;
       border: 1px solid var(--accent);
     }
+    body {
+      background-image: url("<%= entry.imgLink %><% if(entry.imgLink && entry.imgLink.includes('imagekit.io')) { %>?updatedAt=1705798245623<% } %>");
+      background-size: cover;
+      background-position: center;
+    
+      /* Efek blur */
+    
+      /* Gradien hitam transparan */
+      background-image: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.8) 0%,
+        rgba(0, 0, 0, 0) 100%
+      );
+    }
+    
   </style>
   <body>
     <%- include("navbar") %>
@@ -48,6 +63,11 @@
       <div class="row">
         <div class="col-md-6">
           <div class="card mb-3">
+            <img
+              src="<%= entry.imgLink %><% if(entry.imgLink && entry.imgLink.includes('imagekit.io')) { %>?updatedAt=1705798245623<% } %>"
+              class="card-img"
+              style="position: absolute; z-index: -2; filter:blur(20px)"
+              alt="<%= entry.name %>" />
             <img
               src="<%= entry.imgLink %><% if(entry.imgLink && entry.imgLink.includes('imagekit.io')) { %>?updatedAt=1705798245623<% } %>"
               class="card-img"
