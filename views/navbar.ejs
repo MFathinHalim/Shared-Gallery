@@ -9,8 +9,9 @@
 <link href='https://fonts.googleapis.com/css?family=Karla' rel='stylesheet'>
 
 <style>
-  
-
+body {
+    font-family: 'Karla';
+}
   .grecaptcha-badge {
     visibility: hidden;
   }
@@ -78,6 +79,30 @@ backdrop-filter: blur(5.6px);
   background-color: var(--secondary) !important;
   color: white !important;
 }
+#floating-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 10;
+  border: none;
+  background-color: #9dcbd8 !important;
+  color: black;
+
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  transition: all 0.2s ease-in-out;
+}
+
+#floating-button:hover {
+  box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
+}
+
+@media (max-width: 768px) {
+  #floating-button {
+    bottom: 10px;
+    right: 10px;
+  }
+}
+
 </style>
 <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
   <a class="navbar-brand" href="/"
@@ -120,23 +145,11 @@ backdrop-filter: blur(5.6px);
     <form class="form-inline w-100">
       <!-- Add w-100 class to make the form fill the width -->
       <div class="input-group w-100">
-        <div class="input-group-prepend">
-          <span
-            class="input-group-text pl-3 pr-0"
-            style="
-              background-color: var(--secondary);
-              border: 2px solid var(--secondary) !important;
-              border-radius: 34px 0px 0px 34px;
-            ">
-            <i class="fa fa-search text-white"></i>
-            <!-- Assuming you're using Bootstrap icons (Bi) -->
-            <!-- If not using Bootstrap icons, you can replace the above line with your preferred search icon code -->
-          </span>
-        </div>
+
         <input
           class="form-control rounded-pill"
           style="
-            padding: 9px;
+          padding: 23px;
             border-radius: 0px 34px 34px 0px;
             border: 2px solid var(--secondary) !important;
           "
@@ -174,16 +187,16 @@ backdrop-filter: blur(5.6px);
   role="dialog"
   aria-labelledby="uploadModalLabel"
   aria-describedby="uploadModalBody">
-  <div class="modal-dialog bg-transparent" style="border-radius: 12px 12px 0 0 !important;" role="document">
+  <div class="modal-dialog bg-transparent modal-xl" style="border-radius: 12px 12px 0 0 !important;" role="document">
     <div class="modal-content shadow" style="background: none; border: none">
       <div class="modal-header"style="border-radius: 12px 12px 0 0!important;">
         <h5 class="modal-title" id="uploadModalLabel">Add Image ⸜(｡˃ ᵕ ˂ )⸝♡</h5>
         <button
           type="button"
-          class="close text-white"
+          class="text-white btn btn-md btn-danger"
           data-dismiss="modal"
           aria-label="Close">
-          <span aria-hidden="true">&times;</span>
+          Cancel
         </button>
       </div>
       <div class="modal-body" id="uploadModalBody" style="border-radius: 0 0 12px 12px !important;">
@@ -191,63 +204,77 @@ backdrop-filter: blur(5.6px);
           action="/"
           method="post"
           id="myForm"
+          class="row no-gutters"
           enctype="multipart/form-data">
-          <div class="form-group">
-            <label for="imageName">Title</label>
-            <input
-              type="text"
-              class="form-control"
-              id="imageName"
-              name="nama"
-              style="border: 2px solid var(--accent) !important"
-              autocomplete="off"
-              required />
-          </div>
-          <div class="form-group">
-            <label for="imageDesc">Description</label>
-            <textarea
-              class="form-control"
-              id="imageDesc"
-              rows="3"
-              style="border: 2px solid var(--accent) !important"
-              name="desc"
-              required></textarea>
-          </div>
-          <div class="form-group">
-            <label for="imageFile" class="btn btn-secondary rounded-pill">Choose Image</label>
-            <input
-              style="display: none"
-              type="file"
-              class="form-control-file"
-              id="imageFile"
-              name="image"
-              accept="image/*"
-              required />
+  
+          <div class="col-12 col-md-6">
+            <div class="form-group">
+              <label for="imageName">Title</label>
+              <input
+                type="text"
+                class="form-control"
+                id="imageName"
+                name="nama"
+                style="border: 2px solid var(--accent) !important"
+                autocomplete="off"
+                required />
+            </div>
+            <div class="form-group">
+              <label for="imageDesc">Description</label>
+              <textarea
+                class="form-control"
+                id="imageDesc"
+                rows="3"
+                style="border: 2px solid var(--accent) !important"
+                name="desc"
+                required></textarea>
+            </div>
+            <div class="form-group">
+              <label for="imageFile" class="btn btn-secondary rounded-pill">Choose Image</label>
+              <input
+                style="display: none"
+                type="file"
+                class="form-control-file"
+                id="imageFile"
+                name="image"
+                accept="image/*"
+                required />
               <br />
-            <label for="imageLink">Or Pasted From Image Link</label>
-            <input
-              type="text"
-              class="form-control"
-              id="imageLink"
-              style="border: 2px solid var(--accent) !important"
-              name="link"
-              autocomplete="off" />
+              <label for="imageLink">Or Pasted From Image Link</label>
+              <input
+                type="text"
+                class="form-control"
+                id="imageLink"
+                style="border: 2px solid var(--accent) !important"
+                name="link"
+                autocomplete="off" />
+            </div>
+            <button
+              data-sitekey="6LfslRQoAAAAAHVBGwEVitjEQSjCD6F8unKDUdct"
+              data-callback="onSubmit"
+              name="g-recaptcha-response"
+              id="postButton"
+              data-action="submit"
+              type="submit"
+              class="btn g-recaptcha btn-primary">
+              Upload
+            </button>
           </div>
-          <button
-            data-sitekey="6LfslRQoAAAAAHVBGwEVitjEQSjCD6F8unKDUdct"
-            data-callback="onSubmit"
-            name="g-recaptcha-response"
-            id="postButton"
-            data-action="submit"
-            type="submit"
-            class="btn g-recaptcha btn-primary">
-            Upload
-          </button>
+          <div class="col-md-6 d-md-block pl-3">
+            <label>Preview</label>
+          
+            <img src="https://ik.imagekit.io/9hpbqscxd/SG/image-6.jpg?updatedAt=1705798245623" class="mb-2" id="image-preview" style="max-width: 100%;" />
+          </div>
         </form>
+
       </div>
     </div>
   </div>
 </div>
+<a data-toggle="modal"
+data-target="#uploadModal" id="floating-button" class="btn btn-lg btn-primary rounded-circle" style="height: 70px !important; width: 70px !important; font-size: 40px;">
+  <i class="fa fa-plus"></i>
+</a>
 
 <script>
   function onSubmit(token) {
