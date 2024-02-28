@@ -280,6 +280,23 @@ data-target="#uploadModal" id="floating-button" class="btn btn-lg btn-primary ro
 </a>
 
 <script>
+  const imageFile = document.getElementById('imageFile');
+const imagePreview = document.getElementById('image-preview');
+
+imageFile.addEventListener('change', function (e) {
+  const file = e.target.files[0];
+
+  if (!file) {
+    return;
+  }
+
+  const reader = new FileReader();
+  reader.onload = (event) => {
+    imagePreview.src = event.target.result;
+  };
+  reader.readAsDataURL(file);
+});
+
   function onSubmit(token) {
     // Handle form submission or any other action you want after reCAPTCHA is verified
     document.getElementById("myForm").submit();
