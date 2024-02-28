@@ -124,7 +124,7 @@
         <% let datalist = data.sort(() => Math.random() - 0.5); datalist.slice(0,30).forEach((entry) => {
         %>
 
-        <a href="/<%= entry.id %>">
+        <a class="card bg-transparent" href="/<%= entry.id %>">
           <img
             src="<%= entry.imgLink %><% if(entry.imgLink && entry.imgLink.includes('imagekit.io')) { %>?updatedAt=1705798245623<% } %>"
             class="m-2 card"

@@ -41,6 +41,44 @@ box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 backdrop-filter: blur(5.6px);
 -webkit-backdrop-filter: blur(5.6px);
 }
+.card>img{
+  cursor: zoom-in;
+  border-radius: 24px;
+  object-fit: cover;
+  border-color: var(--accent) !important;
+  border: transparent 3px;
+  transition: opacity 0.2s ease, border 0.1s linear;
+}
+
+.card>img:hover {
+  opacity: 0.6;
+  border: double 3px;
+
+}
+@keyframes border-anim {
+  from {
+    border-color: transparent;
+  }
+  to {
+    border-color: #ff0000;
+  }
+}
+
+.navbar-brand:hover{
+  background-color: #f5f7fe34;
+  border-radius: 30%;;
+}
+.nav-brand:active{
+  transform: scale(0.9);
+}
+.add {
+  transition: all 0.2s ease-in-out; 
+}
+
+.add:hover {
+  background-color: var(--secondary) !important;
+  color: white !important;
+}
 </style>
 <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
   <a class="navbar-brand" href="/"
@@ -53,10 +91,11 @@ backdrop-filter: blur(5.6px);
   <ul class="navbar-nav mr-auto">
     <li class="nav-item active">
       <a
-        class="nav-link"
+        class="nav-link add"
         style="
           background: #9dcbd8;
           color: black;
+          border: solid #9dcbd8;
           border-radius: 34px;
           padding: 9px;
         "
