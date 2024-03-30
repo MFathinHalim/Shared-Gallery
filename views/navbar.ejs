@@ -1,111 +1,116 @@
 <link
   rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+/>
 <link
   rel="icon"
   type="image/x-icon"
-  href="https://ik.imagekit.io/9hpbqscxd/SG/image-3.jpg" />
+  href="https://ik.imagekit.io/9hpbqscxd/SG/image-3.jpg"
+/>
 <script src="https://www.google.com/recaptcha/api.js"></script>
-<link href='https://fonts.googleapis.com/css?family=Karla' rel='stylesheet'>
+<link href="https://fonts.googleapis.com/css?family=Karla" rel="stylesheet" />
 
 <style>
-body {
-    font-family: 'Karla';
-}
+  body {
+    font-family: "Karla";
+  }
   .grecaptcha-badge {
     visibility: hidden;
   }
-  .form-group > input, .form-group > .btn, .form-group > textarea{
-  border-radius: 12px
+  .form-group > input,
+  .form-group > .btn,
+  .form-group > textarea {
+    border-radius: 12px;
   }
   label {
-  font-weight: bold;
+    font-weight: bold;
   }
-  .modal-header, .modal-body {
-  background: #272829 !important;
+  .modal-header,
+  .modal-body {
+    background: #272829 !important;
   }
   .modal-header {
     border-bottom: none;
     padding-bottom: 3px !important;
   }
   .navbar-toggler:focus,
-.navbar-toggler:active,
-.navbar-toggler-icon:focus {
+  .navbar-toggler:active,
+  .navbar-toggler-icon:focus {
     outline: none;
     box-shadow: none;
-}
-.navbar-dark {
-/* From https://css.glass */
-background: rgba(9, 2, 2, 0.52);
-box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-backdrop-filter: blur(5.6px);
--webkit-backdrop-filter: blur(5.6px);
-}
-.card>img{
-  cursor: zoom-in;
-  border-radius: 24px;
-  object-fit: cover;
-  border-color: var(--accent) !important;
-  border: transparent 3px;
-  transition: opacity 0.2s ease, border 0.1s linear;
-}
-
-.card>img:hover {
-  opacity: 0.6;
-  border: double 3px;
-
-}
-@keyframes border-anim {
-  from {
-    border-color: transparent;
   }
-  to {
-    border-color: #ff0000;
+  .navbar-dark {
+    /* From https://css.glass */
+    background: rgba(9, 2, 2, 0.52);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5.6px);
+    -webkit-backdrop-filter: blur(5.6px);
   }
-}
+  .card > img {
+    cursor: zoom-in;
+    border-radius: 24px;
+    object-fit: cover;
+    border-color: var(--accent) !important;
+    border: transparent 3px;
+    transition: opacity 0.2s ease, border 0.1s linear;
+  }
 
-.navbar-brand:hover{
-  background-color: #f5f7fe34;
-  border-radius: 30%;;
-}
-.nav-brand:active{
-  transform: scale(0.9);
-}
-.add {
-  transition: all 0.2s ease-in-out; 
-}
+  .card > img:hover {
+    opacity: 0.6;
+    border: double 3px;
+  }
+  @keyframes border-anim {
+    from {
+      border-color: transparent;
+    }
+    to {
+      border-color: #ff0000;
+    }
+  }
 
-.add:hover {
-  background-color: var(--secondary) !important;
-  color: white !important;
-}
-#floating-button {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  z-index: 10;
-  border: none;
-  background-color: #9dcbd8 !important;
-  color: black;
+  .navbar-brand:hover {
+    background-color: #f5f7fe34;
+    border-radius: 30%;
+  }
+  .nav-brand:active {
+    transform: scale(0.9);
+  }
+  .add {
+    transition: all 0.2s ease-in-out;
+  }
 
-  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
-  transition: all 0.2s ease-in-out;
-}
-
-#floating-button:hover {
-  box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
-}
-
-@media (max-width: 768px) {
+  .add:hover {
+    background-color: var(--secondary) !important;
+    color: white !important;
+  }
   #floating-button {
-    bottom: 10px;
-    right: 10px;
-  }
-  #bruh{
-    padding-left: 0 !important;
-  }
-}
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 10;
+    border: none;
+    background-color: #9dcbd8 !important;
+    color: black;
 
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16),
+      0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    transition: all 0.2s ease-in-out;
+  }
+
+  #floating-button:hover {
+    box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18),
+      0 4px 15px 0 rgba(0, 0, 0, 0.15);
+  }
+
+  @media (max-width: 768px) {
+    #floating-button {
+      bottom: 10px;
+      right: 10px;
+    }
+    #bruh {
+      padding-left: 0 !important;
+    }
+  }
 </style>
 <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
   <a class="navbar-brand" href="/"
@@ -128,7 +133,8 @@ backdrop-filter: blur(5.6px);
         "
         href="#"
         data-toggle="modal"
-        data-target="#uploadModal">
+        data-target="#uploadModal"
+      >
         <strong>Add Image</strong>
       </a>
     </li>
@@ -141,18 +147,18 @@ backdrop-filter: blur(5.6px);
     aria-controls="navbarSupportedContent"
     aria-expanded="false"
     aria-label="Toggle navigation"
-    style="border: none !important">
+    style="border: none !important"
+  >
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse p-2" id="navbarSupportedContent">
     <form class="form-inline w-100">
       <!-- Add w-100 class to make the form fill the width -->
       <div class="input-group w-100">
-
         <input
           class="form-control rounded-pill"
           style="
-          padding: 23px;
+            padding: 23px;
             border-radius: 0px 34px 34px 0px;
             border: 2px solid var(--secondary) !important;
           "
@@ -162,7 +168,8 @@ backdrop-filter: blur(5.6px);
           placeholder="Search (∩˃ω˂∩)"
           autocomplete="off"
           aria-label="Search"
-          onkeypress="handleKeyPress(event)" />
+          onkeypress="handleKeyPress(event)"
+        />
       </div>
 
       <script>
@@ -180,7 +187,7 @@ backdrop-filter: blur(5.6px);
         }
       </script>
     </form>
-  </div>  
+  </div>
 </nav>
 
 <div
@@ -189,27 +196,39 @@ backdrop-filter: blur(5.6px);
   tabindex="-1"
   role="dialog"
   aria-labelledby="uploadModalLabel"
-  aria-describedby="uploadModalBody">
-  <div class="modal-dialog bg-transparent modal-xl" style="border-radius: 12px 12px 0 0 !important;" role="document">
+  aria-describedby="uploadModalBody"
+>
+  <div
+    class="modal-dialog bg-transparent modal-xl"
+    style="border-radius: 12px 12px 0 0 !important"
+    role="document"
+  >
     <div class="modal-content shadow" style="background: none; border: none">
-      <div class="modal-header"style="border-radius: 12px 12px 0 0!important;">
-        <h5 class="modal-title" id="uploadModalLabel">Add Image ⸜(｡˃ ᵕ ˂ )⸝♡</h5>
+      <div class="modal-header" style="border-radius: 12px 12px 0 0 !important">
+        <h5 class="modal-title" id="uploadModalLabel">
+          Add Image ⸜(｡˃ ᵕ ˂ )⸝♡
+        </h5>
         <button
           type="button"
           class="text-white btn btn-md btn-danger"
           data-dismiss="modal"
-          aria-label="Close">
+          aria-label="Close"
+        >
           Cancel
         </button>
       </div>
-      <div class="modal-body" id="uploadModalBody" style="border-radius: 0 0 12px 12px !important;">
+      <div
+        class="modal-body"
+        id="uploadModalBody"
+        style="border-radius: 0 0 12px 12px !important"
+      >
         <form
-          action="/"
+          action="/post"
           method="post"
           id="myForm"
           class="row no-gutters"
-          enctype="multipart/form-data">
-  
+          enctype="multipart/form-data"
+        >
           <div class="col-12 col-md-6">
             <div class="form-group">
               <label for="imageName">Title</label>
@@ -220,7 +239,8 @@ backdrop-filter: blur(5.6px);
                 name="nama"
                 style="border: 2px solid var(--accent) !important"
                 autocomplete="off"
-                required />
+                required
+              />
             </div>
             <div class="form-group">
               <label for="imageDesc">Description</label>
@@ -230,10 +250,13 @@ backdrop-filter: blur(5.6px);
                 rows="3"
                 style="border: 2px solid var(--accent) !important"
                 name="desc"
-                required></textarea>
+                required
+              ></textarea>
             </div>
             <div class="form-group">
-              <label for="imageFile" class="btn btn-secondary rounded-pill">Choose Image</label>
+              <label for="imageFile" class="btn btn-secondary rounded-pill"
+                >Choose Image</label
+              >
               <input
                 style="display: none"
                 type="file"
@@ -241,7 +264,8 @@ backdrop-filter: blur(5.6px);
                 id="imageFile"
                 name="image"
                 accept="image/*"
-                required />
+                required
+              />
               <br />
               <label for="imageLink">Or Pasted From Image Link</label>
               <input
@@ -250,7 +274,8 @@ backdrop-filter: blur(5.6px);
                 id="imageLink"
                 style="border: 2px solid var(--accent) !important"
                 name="link"
-                autocomplete="off" />
+                autocomplete="off"
+              />
             </div>
             <button
               data-sitekey="6LfslRQoAAAAAHVBGwEVitjEQSjCD6F8unKDUdct"
@@ -259,44 +284,54 @@ backdrop-filter: blur(5.6px);
               id="postButton"
               data-action="submit"
               type="submit"
-              class="btn g-recaptcha btn-primary">
+              class="btn g-recaptcha btn-primary"
+            >
               Upload
             </button>
           </div>
           <div class="col-md-6 d-md-block pl-3" id="bruh">
             <label>Preview</label>
-            <br>
-          
-            <img src="https://static.wikia.nocookie.net/theallever/images/0/0a/THE_Preview_logo.jpg/revision/latest?cb=20201013032038" class="mb-2" id="image-preview" style="max-width: 100%;" />
+            <br />
+
+            <img
+              src="https://static.wikia.nocookie.net/theallever/images/0/0a/THE_Preview_logo.jpg/revision/latest?cb=20201013032038"
+              class="mb-2"
+              id="image-preview"
+              style="max-width: 100%"
+            />
           </div>
         </form>
-
       </div>
     </div>
   </div>
 </div>
-<a data-toggle="modal"
-data-target="#uploadModal" id="floating-button" class="btn btn-lg btn-primary rounded-circle" style="height: 70px !important; width: 70px !important; font-size: 40px;">
+<a
+  data-toggle="modal"
+  data-target="#uploadModal"
+  id="floating-button"
+  class="btn btn-lg btn-primary rounded-circle"
+  style="height: 70px !important; width: 70px !important; font-size: 40px"
+>
   <i class="fa fa-plus"></i>
 </a>
 
 <script>
-  const imageFile = document.getElementById('imageFile');
-const imagePreview = document.getElementById('image-preview');
+  const imageFile = document.getElementById("imageFile");
+  const imagePreview = document.getElementById("image-preview");
 
-imageFile.addEventListener('change', function (e) {
-  const file = e.target.files[0];
+  imageFile.addEventListener("change", function (e) {
+    const file = e.target.files[0];
 
-  if (!file) {
-    return;
-  }
+    if (!file) {
+      return;
+    }
 
-  const reader = new FileReader();
-  reader.onload = (event) => {
-    imagePreview.src = event.target.result;
-  };
-  reader.readAsDataURL(file);
-});
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      imagePreview.src = event.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
 
   function onSubmit(token) {
     // Handle form submission or any other action you want after reCAPTCHA is verified
@@ -411,7 +446,4 @@ imageFile.addEventListener('change', function (e) {
     background-color: var(--accent);
     outline: 1px solid slategrey;
   }
-
-
 </style>
-
